@@ -7,7 +7,8 @@ public class TopDownAimRotation : MonoBehaviour
     [SerializeField] private SpriteRenderer armRenderer;
     [SerializeField] private Transform armPivot;
 
-    [SerializeField] private SpriteRenderer characterRenderer;
+    [SerializeField] private SpriteRenderer characterRenderer1;
+    [SerializeField] private SpriteRenderer characterRenderer2;
 
     private TopDownCharacterController _controller;
 
@@ -31,7 +32,14 @@ public class TopDownAimRotation : MonoBehaviour
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         armRenderer.flipY = Mathf.Abs(rotZ) > 90f;
-        characterRenderer.flipX = armRenderer.flipY;
+        string myChar = GameManager.I.SelectChar();
+        if (myChar == "selectChar1")
+        {
+            characterRenderer1.flipX = armRenderer.flipY;
+        } else
+        {
+            characterRenderer2.flipX = armRenderer.flipY;
+        }
         armPivot.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 }
