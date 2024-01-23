@@ -9,6 +9,8 @@ public class Npc : MonoBehaviour
     public GameObject NpcPannel;
     public GameObject Player;
     public GameObject Portal;
+    public GameObject NPCText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,7 @@ public class Npc : MonoBehaviour
         if(collision.gameObject == Player && gameObject == Npc1)
         {
             NpcPannel.SetActive(true);
+            NPCText.SetActive(false);
         } else if(gameObject == Portal)
         {
             Vector3 position = Player.transform.localPosition;
@@ -39,10 +42,21 @@ public class Npc : MonoBehaviour
         if (collision.gameObject == Player && gameObject == Npc1)
         {
             NpcPannel.SetActive(false);
+            NPCText.SetActive(false);
         }
         else if (gameObject == Portal)
         {
             Debug.Log("portal");
         }
+    }
+
+    public void OpenNPCText()
+    {
+        GameObject.FindWithTag("NPC1Modal").SetActive(false);
+        NPCText.SetActive(true);
+    }
+    public void CloseNPCText()
+    {
+        NPCText.SetActive(false);
     }
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TopDownAimRotation : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer armRenderer;
-    [SerializeField] private Transform armPivot;
+    [SerializeField] private Transform charTrans;
 
     [SerializeField] private SpriteRenderer characterRenderer1;
     [SerializeField] private SpriteRenderer characterRenderer2;
@@ -24,22 +23,32 @@ public class TopDownAimRotation : MonoBehaviour
 
     public void OnAim(Vector2 newAimDirection)
     {
-        RotateArm(newAimDirection);
+        RotateChar(newAimDirection);
     }
 
-    private void RotateArm(Vector2 direction)
+    private void RotateChar(Vector2 direction)
     {
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        armRenderer.flipY = Mathf.Abs(rotZ) > 90f;
         string myChar = GameManager.I.SelectChar();
         if (myChar == "selectChar1")
         {
-            characterRenderer1.flipX = armRenderer.flipY;
+            if(rotZ < 90 && rotZ > -90)
+            {
+                characterRenderer1.flipX = false;
+            } else
+            {
+                characterRenderer1.flipX = true;
+            }
         } else
         {
-            characterRenderer2.flipX = armRenderer.flipY;
+            if (rotZ < 90 && rotZ > -90)
+            {
+                characterRenderer2.flipX = false;
+            }
+            else
+            {
+                characterRenderer2.flipX = true;
+            }
         }
-        armPivot.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 }
